@@ -2,7 +2,7 @@
 A .Net wrapper for the OpenCV (Open Source Computer Vision) library
 
 ## Get Started
-Clone this project and build it by using Visual Studio 2013 (or later). Reference Fugro.OpenCV.dll in your own project and you are ready to go. The repository includes unit tests which can be run by using NUnit.
+Clone this project and build it by using Visual Studio 2017. Reference Fugro.OpenCV.dll in your own project and you are ready to go. The repository includes unit tests which can be run by using NUnit.
 
 ### C# example
 

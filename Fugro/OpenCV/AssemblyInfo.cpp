@@ -12,8 +12,7 @@ using namespace System::Resources;
 #endif
 
 [assembly: AssemblyProduct("Fugro.OpenCV")];
-[assembly: AssemblyInformationalVersion("1.0.0.0")];
-[assembly: AssemblyVersion("1.0.0")];
+[assembly: AssemblyVersion("1.0.1")];
 [assembly: AssemblyCulture("")];
 
 [assembly: AssemblyCompany("Fugro")];
