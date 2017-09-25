@@ -33,9 +33,32 @@ Mat CreateFromArray(array<double>^ kernel)
   }
 }
 
+Mat CreateFromArray2D(array<double>^ kernel, int width, int height)
+{
+  GCHandle handle = GCHandle::Alloc(kernel, GCHandleType::Pinned);
+  try
+  {
+    System::IntPtr ptr = handle.AddrOfPinnedObject();
+
+    Mat tempMat(height, width, CV_64F, ptr.ToPointer());
+
+    Mat result;
+    tempMat.copyTo(result);
+
+    return result;
+  }
+  finally
+  {
+    handle.Free();
+  }
+}
+
 Kernel::Kernel(array<double>^ kernel) :MatArrayBase(CreateFromArray(kernel))
 {
+}
 
+Kernel::Kernel(array<double>^ kernel, int width, int height) : MatArrayBase(CreateFromArray2D(kernel, width, height))
+{
 }
 
 double Kernel::At(int column, int row)

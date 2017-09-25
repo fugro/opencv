@@ -245,6 +245,27 @@ namespace Fugro.OpenCV.Test
         }
 
         [Test]
+        public void TestFilter2D()
+        {
+            var sobelKernel = new Kernel(new[]
+            {
+                -1.0, -2.0, -1.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0
+            },3,3);
+
+            var image = BuildRandomImage(50, 50);
+            var expected = image.Sobel(0, 1, 3).ToImageArray();
+            var result = image.Filter2D(sobelKernel);
+
+            var expectedPixels = expected.CopyPixels();
+            var resultPixels = result.CopyPixels();
+            
+            for (int i = 0; i < expectedPixels.Length; i++)
+            {
+                Assert.AreEqual(expectedPixels[i], resultPixels[i], 1e-8);
+            }
+        }
+
+        [Test]
         public void TestGrayscaleConversion()
         {
             var blue = BuildRandomImage(50, 50);

@@ -69,6 +69,18 @@ T MatArray<T>::Divide(T input)
 }
 
 generic<class T>
+T MatArray<T>::Filter2D(Kernel^ kernel)
+{
+  Mat output;
+  filter2D(*this->mat, output, -1, *kernel->mat);
+
+  GC::KeepAlive(this);
+  GC::KeepAlive(kernel);
+
+  return this->create(output);
+}
+
+generic<class T>
 T MatArray<T>::Filter2DSeparable(Kernel^ kernelX, Kernel^ kernelY)
 {
   Mat output;

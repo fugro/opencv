@@ -62,6 +62,11 @@ namespace Fugro
       /// </summary>
       T Filter2DSeparable(Kernel^ kernelX, Kernel^ kernelY);
 
+      /// <summary>
+      /// Convolves an image with the kernel
+      /// </summary>
+      T Filter2D(Kernel^ kernel);
+
       /// <summary>                
       /// Blurs an image using a Gaussian filter.
       /// </summary> 

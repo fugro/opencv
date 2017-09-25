@@ -14,6 +14,7 @@ namespace Fugro
 
     public:
       Kernel(array<double>^ kernel);
+      Kernel(array<double>^ kernel, int width, int height);
 
       /// <summary>
       /// Gets a particular element.
