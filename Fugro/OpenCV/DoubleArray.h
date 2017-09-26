@@ -1,9 +1,5 @@
 #pragma once
 
-#pragma unmanaged 
-#include "opencv2\core\core.hpp"
-#pragma managed 
-
 #include "MatArray.h"
 #include "Enumerations.h"
 #include "Primitives.h"

@@ -1,10 +1,5 @@
 #pragma once
 
-#pragma unmanaged 
-#include "opencv2\imgproc\imgproc.hpp"
-#include "opencv2\video\tracking.hpp"
-#pragma managed 
-
 #include "MatArray.h"
 #include "DoubleArray.h"
 #include "Enumerations.h"

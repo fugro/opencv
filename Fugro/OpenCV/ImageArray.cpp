@@ -1,11 +1,7 @@
 #include "ImageArray.h"
-
 #include <msclr\marshal_cppstd.h> 
-
-#pragma unmanaged 
 #include "opencv2\imgcodecs\imgcodecs.hpp"
-#include "opencv2\core\core.hpp"
-#pragma managed 
+#include "opencv2\video\tracking.hpp"
 
 using namespace System;
 using namespace Fugro::OpenCV;
@@ -13,7 +9,6 @@ using namespace System::Runtime::InteropServices;
 using namespace System::Windows::Media;
 
 using namespace msclr::interop;
-using namespace std;
 
 ImageArray^ CreateImageArray(const Mat& mat)
 {
@@ -151,8 +146,8 @@ IEnumerable<OpticalFlowResult>^ ImageArray::CalculateOpticalFlowPyrLK(ImageArray
 
 IEnumerable<OpticalFlowResult>^ ImageArray::CalculateOpticalFlowPyrLK(ImageArray^ nextImage, IEnumerable<DoublePoint>^ previousPoints, Int32Size windowSize, int maxLevel)
 {
-  vector<Point2f> nextPts;
-  vector<Point2f> prevPts;
+  std::vector<Point2f> nextPts;
+  std::vector<Point2f> prevPts;
   for each (auto point in previousPoints)
   {
     nextPts.push_back(static_cast<Point2f>(point));
@@ -193,7 +188,7 @@ ImageArray^ ImageArray::Canny(double threshold1, double threshold2)
 
 IEnumerable<DoublePoint>^ ImageArray::CornerSubPixel(IEnumerable<DoublePoint>^ corners, Int32Size windowSize, int maxIteration, double terminationCriteria)
 {
-  vector<Point2f> opencvCorners;
+  std::vector<Point2f> opencvCorners;
   for each (auto point in corners)
   {
     opencvCorners.push_back(static_cast<Point2f>(point));
@@ -226,8 +221,8 @@ ImageArray^ ImageArray::ExtractRoi(System::Windows::Int32Rect roi)
 
 IEnumerable<Contour^>^ ImageArray::FindContours(ContourRetrievalMode mode, ContourApproximationMethod method)
 {
-  vector<vector<cv::Point>> contours;
-  vector<Vec4i> hierarchy;
+  std::vector<std::vector<cv::Point>> contours;
+  std::vector<Vec4i> hierarchy;
 
   findContours(*this->mat, contours, hierarchy, (int)mode, (int)method);
 
@@ -256,7 +251,7 @@ unsigned char ImageArray::GetSubPixelValue(double x, double y)
 
 IEnumerable<DoublePoint>^ ImageArray::GoodFeaturesToTrack(int maximumCorners, double qualityLevel, int minimumDistance, System::Windows::Int32Rect roi)
 {
-  vector<Point2f> corners;
+  std::vector<Point2f> corners;
 
   Mat mask(this->mat->rows, this->mat->cols, CV_8UC1, cv::Scalar::all(0));
   mask(Rect(roi.X, roi.Y, roi.Width, roi.Height)) = 255;
@@ -276,7 +271,7 @@ IEnumerable<DoublePoint>^ ImageArray::GoodFeaturesToTrack(int maximumCorners, do
 
 IEnumerable<DoublePoint>^ ImageArray::GoodFeaturesToTrack(int maximumCorners, double qualityLevel, int minimumDistance)
 {
-  vector<Point2f> corners;
+  std::vector<Point2f> corners;
 
   goodFeaturesToTrack(*this->mat, corners, maximumCorners, qualityLevel, minimumDistance);
 
