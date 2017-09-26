@@ -96,11 +96,12 @@
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4127;4512</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4127;4244;4512</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>
       </TargetMachine>
+      <AdditionalOptions>/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,10 +125,11 @@
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4127;4512</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4127;4244;4512</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,8 +154,11 @@
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4127;4512</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4127;4244;4512</DisableSpecificWarnings>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -177,10 +182,11 @@
       <PrecompiledHeaderFile>precomp.hpp</PrecompiledHeaderFile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>4127;4512</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4127;4244;4512</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalOptions>/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
