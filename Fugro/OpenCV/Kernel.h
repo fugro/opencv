@@ -10,7 +10,7 @@ namespace Fugro
     public ref class Kernel sealed : MatArrayBase
     {
     protected:
-      Kernel(const Mat& mat);
+      Kernel(const UMat& mat);
 
     public:
       Kernel(array<double>^ kernel);

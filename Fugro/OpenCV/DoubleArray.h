@@ -15,7 +15,7 @@ namespace Fugro
     public ref class DoubleArray sealed : public MatArray<DoubleArray^>
     {
     internal:
-      DoubleArray(const Mat& mat);
+      DoubleArray(const UMat& mat);
 
     public:
       DoubleArray(array<double>^ data, int width, int height);

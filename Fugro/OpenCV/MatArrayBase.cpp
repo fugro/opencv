@@ -4,9 +4,9 @@
 using namespace Fugro::OpenCV;
 using namespace System;
 
-MatArrayBase::MatArrayBase(const Mat& mat)
+MatArrayBase::MatArrayBase(const UMat& mat)
 {
-  this->mat = new Mat(mat);
+  this->mat = new UMat(mat);
   
   auto sizeInBytes = this->mat->total() * this->mat->elemSize();
   if (sizeInBytes > 0)

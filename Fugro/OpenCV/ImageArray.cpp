@@ -10,16 +10,16 @@ using namespace System::Windows::Media;
 
 using namespace msclr::interop;
 
-ImageArray^ CreateImageArray(const Mat& mat)
+ImageArray^ CreateImageArray(const UMat& mat)
 {
   return gcnew ImageArray(mat);
 }
 
-ImageArray::ImageArray(const Mat& image) : MatArray(image, gcnew CreateDelegate(CreateImageArray))
+ImageArray::ImageArray(const UMat& image) : MatArray(image, gcnew CreateDelegate(CreateImageArray))
 {
 }
 
-Mat CreateFromBitmapSource(BitmapSource^ bitmapSource)
+UMat CreateFromBitmapSource(BitmapSource^ bitmapSource)
 {
   if (bitmapSource == nullptr)
   {
@@ -56,7 +56,7 @@ Mat CreateFromBitmapSource(BitmapSource^ bitmapSource)
 
     Mat image(bitmapSource->PixelHeight, bitmapSource->PixelWidth, type, ptr.ToPointer());
 
-    Mat result;
+    UMat result;
     image.copyTo(result);
 
     return result;
@@ -71,7 +71,7 @@ ImageArray::ImageArray(BitmapSource^ bitmapSource) : MatArray(CreateFromBitmapSo
 {
 }
 
-Mat CreateFromArray(array<unsigned char>^ pixels, int width, int height)
+UMat CreateFromArray(array<unsigned char>^ pixels, int width, int height)
 {
   GCHandle handle = GCHandle::Alloc(pixels, GCHandleType::Pinned);
   try
@@ -80,7 +80,7 @@ Mat CreateFromArray(array<unsigned char>^ pixels, int width, int height)
 
     Mat image(height, width, CV_8UC1, ptr.ToPointer());
 
-    Mat result;
+    UMat result;
     image.copyTo(result);
 
     return result;
@@ -95,11 +95,11 @@ ImageArray::ImageArray(array<unsigned char>^ pixels, int width, int height) : Ma
 {
 }
 
-Mat CreateFromFile(System::String^ fileName)
+UMat CreateFromFile(System::String^ fileName)
 {
   std::string standardString = marshal_as<std::string>(fileName);
 
-  return imread(standardString, IMREAD_UNCHANGED);
+  return imread(standardString, IMREAD_UNCHANGED).getUMat(ACCESS_READ);
 }
 
 ImageArray::ImageArray(System::String^ fileName) : MatArray(CreateFromFile(fileName), gcnew CreateDelegate(CreateImageArray))
@@ -110,7 +110,7 @@ array<unsigned char>^ ImageArray::CopyPixels()
 {
   array<unsigned char>^ result = gcnew array<unsigned char>(Columns * Rows * ChannelCount);
 
-  Marshal::Copy(IntPtr(this->mat->data), result, 0, result->Length);
+  Marshal::Copy(IntPtr(this->mat->getMat(ACCESS_READ).data), result, 0, result->Length);
 
   GC::KeepAlive(this);
 
@@ -126,7 +126,7 @@ unsigned char ImageArray::At(int column, int row)
 	{
 		if (this->mat->type() == CV_8UC1)
 		{
-			return this->mat->at<unsigned char>(row, column);
+			return this->mat->getMat(ACCESS_READ).at<unsigned char>(row, column);
 		}
 		else
 		{
@@ -177,7 +177,7 @@ IEnumerable<OpticalFlowResult>^ ImageArray::CalculateOpticalFlowPyrLK(ImageArray
 
 ImageArray^ ImageArray::Canny(double threshold1, double threshold2)
 {
-  Mat result;
+  UMat result;
 
   cv::Canny(*this->mat, result, threshold1, threshold2);
 
@@ -212,7 +212,7 @@ ImageArray^ ImageArray::ExtractRoi(System::Windows::Int32Rect roi)
   Rect roi2(roi.X, roi.Y, roi.Width, roi.Height);
   auto rect = roi2 & Rect(0, 0, Columns, Rows);
 
-  Mat result = Mat(*this->mat, rect);
+  auto result = UMat(*this->mat, rect);
 
   GC::KeepAlive(this);
 
@@ -291,7 +291,7 @@ DoubleArray^ ImageArray::MatchTemplate(ImageArray^ templateImage, TemplateMatchi
   Mat mat32;
   matchTemplate(*this->mat, *templateImage->mat, mat32, (int)matchMethod);
 
-  Mat mat64;
+  UMat mat64;
   mat32.convertTo(mat64, CV_64F);
 
   GC::KeepAlive(this);
@@ -322,7 +322,7 @@ DoubleArray^ ImageArray::Sobel(int xOrder, int yOrder, int filterSize)
 
 DoubleArray^ ImageArray::Sobel(int xOrder, int yOrder, int filterSize, double scale)
 {
-  Mat result;
+  UMat result;
   cv::Sobel(*this->mat, result, CV_64F, xOrder, yOrder, filterSize, scale);
 
   GC::KeepAlive(this);
@@ -332,7 +332,7 @@ DoubleArray^ ImageArray::Sobel(int xOrder, int yOrder, int filterSize, double sc
 
 ImageArray^ ImageArray::Threshold(unsigned char value, unsigned char maxValue, ThresholdType type)
 {
-  Mat result;
+  UMat result;
   threshold(*this->mat, result, value, maxValue, (int)type);
 
   GC::KeepAlive(this);
@@ -342,7 +342,7 @@ ImageArray^ ImageArray::Threshold(unsigned char value, unsigned char maxValue, T
 
 DoubleArray^ ImageArray::ToDoubleArray()
 {
-  Mat result;
+  UMat result;
 
   mat->convertTo(result, CV_64F);
 
@@ -353,7 +353,7 @@ DoubleArray^ ImageArray::ToDoubleArray()
 
 ImageArray^ ImageArray::ConvertColor(ColorConversion conversion)
 {
-  Mat result;
+  UMat result;
 
   try
   {
@@ -377,7 +377,7 @@ ImageArray^ ImageArray::Undistort(DoubleArray^ cameraMatrix, DoubleArray^ distor
   Mat map2;
   initUndistortRectifyMap(*cameraMatrix->mat, *distortionCoefficients->mat, eye, *cameraMatrix->mat, this->mat->size(), CV_32FC1, map1, map2);
 
-  Mat result;
+  UMat result;
   remap(*this->mat, result, map1, map2, INTER_NEAREST);
 
   GC::KeepAlive(this);

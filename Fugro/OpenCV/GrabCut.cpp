@@ -29,7 +29,7 @@ void GrabCut::AddBackgroundPoint(System::Windows::Point point)
 
 array<Byte>^ GrabCut::Iterate(ImageArray^ imageArray, int iterationCount)
 {
-  Mat image(*imageArray->mat);
+  UMat image(*imageArray->mat);
 
 	if (image.type() == CV_8UC4)
 	{

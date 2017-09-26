@@ -22,9 +22,9 @@ namespace Fugro
     {
 
     internal:
-      delegate T CreateDelegate(const Mat&);
+      delegate T CreateDelegate(const UMat&);
 
-      MatArray(const Mat&, CreateDelegate^);
+      MatArray(const UMat&, CreateDelegate^);
 
     private:
       CreateDelegate^ create;

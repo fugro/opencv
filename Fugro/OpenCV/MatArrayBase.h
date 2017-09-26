@@ -16,7 +16,7 @@ namespace Fugro
       size_t memoryPressure;
 
     protected:
-      MatArrayBase(const Mat& mat);
+      MatArrayBase(const UMat& mat);
       !MatArrayBase();
       ~MatArrayBase();
 
@@ -24,7 +24,7 @@ namespace Fugro
       void AssertColumnIndexInRange(int index, System::String^ paramName);
 
     internal:
-      Mat* mat;
+      UMat* mat;
 
     public:
 

@@ -5,17 +5,17 @@ using namespace System;
 using namespace Fugro::OpenCV;
 using namespace System::Runtime::InteropServices;
 
-DoubleArray^ CreateDoubleArray(const Mat& mat)
+DoubleArray^ CreateDoubleArray(const UMat& mat)
 {
   return gcnew DoubleArray(mat);
 }
 
-DoubleArray::DoubleArray(const Mat& mat) : MatArray(mat, gcnew CreateDelegate(CreateDoubleArray))
+DoubleArray::DoubleArray(const UMat& mat) : MatArray(mat, gcnew CreateDelegate(CreateDoubleArray))
 {
   
 }
 
-Mat CreateFromArray(array<double>^ data, int width, int height)
+UMat CreateFromArray(array<double>^ data, int width, int height)
 {
   GCHandle handle = GCHandle::Alloc(data, GCHandleType::Pinned);
   try
@@ -24,7 +24,7 @@ Mat CreateFromArray(array<double>^ data, int width, int height)
 
     Mat tempMat(height, width, CV_64F, ptr.ToPointer());
 
-    Mat result;
+    UMat result;
     tempMat.copyTo(result);
 
     return result;
@@ -42,7 +42,7 @@ DoubleArray::DoubleArray(array<double>^ data, int width, int height) : MatArray(
 
 DoubleArray^ DoubleArray::Add(double scalar)
 {
-  Mat result;
+  UMat result;
   add(*this->mat, scalar, result);
 
   GC::KeepAlive(this);
@@ -57,7 +57,7 @@ double DoubleArray::At(int column, int row)
   
   if (this->mat->type() == CV_64F)
   {
-    return this->mat->at<double>(row, column);
+    return this->mat->getMat(ACCESS_READ).at<double>(row, column);
   }
   else
   {
@@ -69,7 +69,7 @@ array<double>^ DoubleArray::GetValues()
 {
   array<double>^ result = gcnew array<double>(this->mat->size().area());
 
-  Marshal::Copy(IntPtr(this->mat->data), result, 0, result->Length);
+  Marshal::Copy(IntPtr(this->mat->getMat(ACCESS_READ).data), result, 0, result->Length);
 
   GC::KeepAlive(this);
 
@@ -78,7 +78,7 @@ array<double>^ DoubleArray::GetValues()
 
 DoubleArray^ DoubleArray::Divide(double scalar)
 {
-  Mat result;
+  UMat result;
 
   divide(*this->mat, scalar, result);
   
@@ -89,7 +89,7 @@ DoubleArray^ DoubleArray::Divide(double scalar)
 
 DoubleArray^ DoubleArray::Dft(DftTransformations flags)
 {
-  Mat result;
+  UMat result;
 
   dft(*this->mat, result, (int)flags);
 
@@ -100,7 +100,7 @@ DoubleArray^ DoubleArray::Dft(DftTransformations flags)
 
 DoubleArray^ DoubleArray::InverseDft(DftTransformations flags)
 {
-  Mat result;
+  UMat result;
 
   idft(*this->mat, result, (int)flags);
 
@@ -111,7 +111,7 @@ DoubleArray^ DoubleArray::InverseDft(DftTransformations flags)
 
 DoubleArray^ DoubleArray::Integral()
 {
-  Mat result;
+  UMat result;
 
   integral(*this->mat, result);
 
@@ -122,7 +122,7 @@ DoubleArray^ DoubleArray::Integral()
 
 DoubleArray^ DoubleArray::Magnitude(DoubleArray^ other)
 {
-  Mat result;
+  UMat result;
 
   magnitude(*this->mat, *other->mat, result);
 
@@ -156,7 +156,7 @@ Int32Point DoubleArray::MinLoc()
 
 DoubleArray^ DoubleArray::MulSpectrums(DoubleArray^ other, bool conjugate, bool independentRows)
 {
-  Mat result;
+  UMat result;
 
   int flags = independentRows ? DFT_ROWS : 0;
 
@@ -175,7 +175,7 @@ DoubleArray^ DoubleArray::MulSpectrums(DoubleArray^ other, bool conjugate)
 
 ImageArray^ DoubleArray::ToImageArray(double alpha, double beta)
 {
-  Mat result;
+  UMat result;
   mat->convertTo(result, CV_8UC1, alpha, beta);
 
   GC::KeepAlive(this);
@@ -185,7 +185,7 @@ ImageArray^ DoubleArray::ToImageArray(double alpha, double beta)
 
 ImageArray^ DoubleArray::ToImageArray()
 {
-	Mat result;
+  UMat result;
 
   mat->convertTo(result, CV_8UC1);
 

@@ -18,7 +18,7 @@ namespace Fugro
     public ref class ImageArray sealed : public MatArray < ImageArray^ >
     {
     internal:
-      ImageArray(const Mat& image);
+      ImageArray(const UMat& image);
 
     public:
       ImageArray(BitmapSource^ bitmapSource);

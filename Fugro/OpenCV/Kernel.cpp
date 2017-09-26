@@ -8,12 +8,12 @@ using namespace Fugro::OpenCV;
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-Kernel::Kernel(const Mat& mat) : MatArrayBase(mat)
+Kernel::Kernel(const UMat& mat) : MatArrayBase(mat)
 {
 
 }
 
-Mat CreateFromArray(array<double>^ kernel)
+UMat CreateFromArray(array<double>^ kernel)
 {
   GCHandle handle = GCHandle::Alloc(kernel, GCHandleType::Pinned);
   try
@@ -22,7 +22,7 @@ Mat CreateFromArray(array<double>^ kernel)
 
     Mat tempMat(kernel->Length, 1, CV_64F, ptr.ToPointer());
 
-    Mat result;
+    UMat result;
     tempMat.copyTo(result);
     
     return result;
@@ -33,7 +33,7 @@ Mat CreateFromArray(array<double>^ kernel)
   }
 }
 
-Mat CreateFromArray2D(array<double>^ kernel, int width, int height)
+UMat CreateFromArray2D(array<double>^ kernel, int width, int height)
 {
   GCHandle handle = GCHandle::Alloc(kernel, GCHandleType::Pinned);
   try
@@ -42,7 +42,7 @@ Mat CreateFromArray2D(array<double>^ kernel, int width, int height)
 
     Mat tempMat(height, width, CV_64F, ptr.ToPointer());
 
-    Mat result;
+    UMat result;
     tempMat.copyTo(result);
 
     return result;
@@ -68,7 +68,7 @@ double Kernel::At(int column, int row)
 
   if (this->mat->type() == CV_64F)
   {
-    return this->mat->at<double>(row, column);
+    return this->mat->getMat(ACCESS_READ).at<double>(row, column);
   }
   else
   {
@@ -80,5 +80,5 @@ Kernel^ Kernel::GetGaussianKernel(int size, double sigma)
 {
   auto mat = cv::getGaussianKernel(size, sigma);
 
-  return gcnew Kernel(mat);
+  return gcnew Kernel(mat.getUMat(ACCESS_READ));
 }

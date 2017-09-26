@@ -4,7 +4,7 @@ using namespace System;
 using namespace Fugro::OpenCV;
 
 generic<class T>
-MatArray<T>::MatArray(const Mat& mat, CreateDelegate^ create) : MatArrayBase(mat)
+MatArray<T>::MatArray(const UMat& mat, CreateDelegate^ create) : MatArrayBase(mat)
 {
   this->create = create;
 }
@@ -12,7 +12,7 @@ MatArray<T>::MatArray(const Mat& mat, CreateDelegate^ create) : MatArrayBase(mat
 generic<class T>
 T MatArray<T>::Abs()
 {      
-  Mat output;
+  UMat output;
   absdiff(*this->mat, Scalar::all(0), output);
  
   GC::KeepAlive(this);
@@ -23,7 +23,7 @@ T MatArray<T>::Abs()
 generic<class T>
 T MatArray<T>::Add(T input)
 {        
-  Mat output;
+  UMat output;
   add(*this->mat, *input->mat, output);
  
   GC::KeepAlive(this);
@@ -35,7 +35,7 @@ T MatArray<T>::Add(T input)
 generic<class T>
 T MatArray<T>::BoxFilter(int w)
 {
-  Mat output;
+  UMat output;
 
   cv::boxFilter(*this->mat, output, -1, Size(w, w));
 
@@ -47,7 +47,7 @@ T MatArray<T>::BoxFilter(int w)
 generic<class T>
 T MatArray<T>::CopyMakeBorder(int top, int bottom, int left, int right, BorderInterpolation borderType)
 {
-  Mat output;
+  UMat output;
 
   copyMakeBorder(*this->mat, output, top, bottom, left, right, (int)borderType);
 
@@ -59,7 +59,7 @@ T MatArray<T>::CopyMakeBorder(int top, int bottom, int left, int right, BorderIn
 generic<class T>
 T MatArray<T>::Divide(T input)
 {
-  Mat output;
+  UMat output;
   divide(*this->mat, *input->mat, output);
   
   GC::KeepAlive(this);
@@ -71,7 +71,7 @@ T MatArray<T>::Divide(T input)
 generic<class T>
 T MatArray<T>::Filter2D(Kernel^ kernel)
 {
-  Mat output;
+  UMat output;
   filter2D(*this->mat, output, -1, *kernel->mat);
 
   GC::KeepAlive(this);
@@ -83,7 +83,7 @@ T MatArray<T>::Filter2D(Kernel^ kernel)
 generic<class T>
 T MatArray<T>::Filter2DSeparable(Kernel^ kernelX, Kernel^ kernelY)
 {
-  Mat output;
+  UMat output;
   sepFilter2D(*this->mat, output, -1, *kernelX->mat, *kernelY->mat);
 
   GC::KeepAlive(this);
@@ -98,7 +98,7 @@ T MatArray<T>::GaussianBlur(int kernelWidth, int kernelHeight, double sigmaX, do
 {
   Size size(kernelWidth, kernelHeight);
   
-  Mat output;
+  UMat output;
   cv::GaussianBlur(*this->mat, output, size, sigmaX, sigmaY);
   
   GC::KeepAlive(this);
@@ -117,7 +117,7 @@ double MatArray<T>::Mean()
 generic<class T>
 T MatArray<T>::Merge(... array<T>^ channels)
 {
-  std::vector<Mat> output;
+  std::vector<UMat> output;
   output.push_back(*this->mat);
 
   for (int i = 0; i < channels->Length; ++i)
@@ -125,7 +125,7 @@ T MatArray<T>::Merge(... array<T>^ channels)
     output.push_back(*channels[i]->mat);
   }
 
-  Mat result;
+  UMat result;
   merge(output, result);
 
   GC::KeepAlive(this);
@@ -137,7 +137,7 @@ T MatArray<T>::Merge(... array<T>^ channels)
 generic<class T>
 T MatArray<T>::Multiply(T input)
 {        
-  Mat output;
+  UMat output;
   multiply(*this->mat, *input->mat, output);
   
   GC::KeepAlive(this);
@@ -149,8 +149,8 @@ T MatArray<T>::Multiply(T input)
 generic<class T>
 T MatArray<T>::Multiply(double scalar)
 {        
-  Mat output(*this->mat * scalar);
-
+  UMat output;
+  cv::multiply(*this->mat, scalar, output);
   GC::KeepAlive(this);
   
   return this->create(output);
@@ -159,7 +159,7 @@ T MatArray<T>::Multiply(double scalar)
 generic<class T>
 T MatArray<T>::Pow(double exponent)
 {        
-  Mat output;
+  UMat output;
   pow(*this->mat, exponent, output);
   
   GC::KeepAlive(this);
@@ -170,7 +170,7 @@ T MatArray<T>::Pow(double exponent)
 generic<class T>
 T MatArray<T>::PyrDown()
 {
-  Mat output;
+  UMat output;
   pyrDown(*this->mat, output);
 
   GC::KeepAlive(this);
@@ -181,7 +181,7 @@ T MatArray<T>::PyrDown()
 generic<class T>
 T MatArray<T>::PyrUp()
 {
-  Mat output;
+  UMat output;
   pyrUp(*this->mat, output);
 
   GC::KeepAlive(this);
@@ -194,7 +194,7 @@ T MatArray<T>::Resize(int newWidth, int newHeight)
 {
 	Size size = Size(newWidth, newHeight);
 	
-  Mat output;
+  UMat output;
   resize(*this->mat, output, size, 0, 0, INTER_NEAREST);
 
   GC::KeepAlive(this);
@@ -205,7 +205,7 @@ T MatArray<T>::Resize(int newWidth, int newHeight)
 generic<class T>
 array<T>^ MatArray<T>::Split()
 {
-  std::vector<Mat> output;
+  std::vector<UMat> output;
 
   split(*this->mat, output);
 
@@ -223,7 +223,7 @@ array<T>^ MatArray<T>::Split()
 generic<class T>
 T  MatArray<T>::Substract(T other)
 {
-  Mat output;
+  UMat output;
   subtract(*this->mat, *other->mat, output);
 
   GC::KeepAlive(this);
@@ -235,7 +235,7 @@ T  MatArray<T>::Substract(T other)
 generic<class T>
 T  MatArray<T>::GreaterThan(T other)
 {
-  Mat output;
+  UMat output;
   compare(*this->mat, *other->mat, output, CMP_GT);
 
 	GC::KeepAlive(this);
@@ -247,7 +247,7 @@ T  MatArray<T>::GreaterThan(T other)
 generic<class T>
 T MatArray<T>::Sqrt()
 {        
-  Mat output;
+  UMat output;
   sqrt(*this->mat, output);
   
   GC::KeepAlive(this);
