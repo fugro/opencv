@@ -200,6 +200,12 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\external\3rdparty\libpng\libpng.vcxproj">
+      <Project>{41dc898a-039a-461c-83d9-c49ab0c1610e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\external\3rdparty\zlib\zlib.vcxproj">
+      <Project>{ac931715-5b7e-43e1-b460-b85226086dbb}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\external\modules\core\opencv_core.vcxproj">
       <Project>{74f4c334-d090-429a-8d0a-e957354cb68d}</Project>
     </ProjectReference>
