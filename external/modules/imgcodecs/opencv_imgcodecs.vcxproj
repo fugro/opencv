@@ -76,7 +76,7 @@
     <ProjectGuid>{58BBA37A-92FF-48F0-ADEA-5DEE1B6534C7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>opencv_imgcodecs</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

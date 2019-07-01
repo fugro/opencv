@@ -51,7 +51,7 @@
     <ProjectGuid>{D7498039-5AC4-43B9-9876-8A6958141D7D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>opencv_video</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
