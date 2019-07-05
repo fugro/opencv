@@ -21,8 +21,19 @@ namespace Fugro
       ImageArray(const Mat& image);
 
     public:
+      /// <summary> 
+      /// This class uses unmanaged objects and needs to be disposed in a using statement or in a dispose method
+      /// </summary>
       ImageArray(BitmapSource^ bitmapSource);
+
+      /// <summary> 
+      /// This class uses unmanaged objects and needs to be disposed in a using statement or in a dispose method
+      /// </summary>
       ImageArray(array<unsigned char>^ pixels, int width, int height);
+
+      /// <summary> 
+      /// This class uses unmanaged objects and needs to be disposed in a using statement or in a dispose method
+      /// </summary>
       ImageArray(System::String^ fileName);
 
       /// <summary>
@@ -130,7 +141,7 @@ namespace Fugro
       ImageArray^ Threshold(unsigned char value, unsigned char maxValue, ThresholdType type);
 
       /// <summary>
-      /// Converts image to DoubleArray.
+      /// Converts image to DoubleArray. The result should be disposed, because it uses unmanaged objects.
       /// </summary>
       DoubleArray^ ToDoubleArray();
 

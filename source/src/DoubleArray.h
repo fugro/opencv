@@ -18,6 +18,9 @@ namespace Fugro
       DoubleArray(const Mat& mat);
 
     public:
+      /// <summary> 
+      /// This class uses unmanaged objects and needs to be disposed in a using statement or in a dispose method
+      /// </summary>
       DoubleArray(array<double>^ data, int width, int height);
 
       DoubleArray^ Add(double scalar);
@@ -92,8 +95,14 @@ namespace Fugro
       /// <param name="conjugate">optional flag that conjugates the second input array before the multiplication (true) or not (false).</param>
       DoubleArray^ MulSpectrums(DoubleArray^ other, bool conjugate);
 
+	  /// <summary> 
+      /// The resulting ImageArray needs to be dispose because it uses unmanaged objects.
+      /// </summary>
       ImageArray^ ToImageArray();
 
+	  /// <summary> 
+      /// The resulting ImageArray needs to be dispose because it uses unmanaged objects.
+      /// </summary>
       ImageArray^ ToImageArray(double alpha, double beta);
     };
 
