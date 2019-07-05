@@ -1,0 +1,4 @@
+[submodule "source/opencv"]
+	path = source/opencv
+	url = https://github.com/opencv/opencv
+	branch = 3.4
