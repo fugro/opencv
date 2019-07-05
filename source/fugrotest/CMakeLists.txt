@@ -21,8 +21,7 @@ target_link_libraries(${project_name}
 			PUBLIC Fugro.OpenCV 
 )
 set_property(TARGET ${project_name} PROPERTY VS_PACKAGE_REFERENCES 
-	"NUnit_3.8.1" 
-	"NUnit3TestAdapter_3.8.0")
+	"NUnit_3.10.1")
 
 set_target_properties(${project_name} PROPERTIES
   VS_DOTNET_REFERENCES_COPY_LOCAL OFF
