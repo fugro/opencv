@@ -29,6 +29,11 @@ set_target_properties(${project_name} PROPERTIES
 )
 
 
+set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/Release )
+set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/Debug )
+set_target_properties(${project_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release )
+
+
 set_property(TARGET ${project_name} PROPERTY VS_DOTNET_REFERENCES
 	"PresentationCore"
 	"System"
@@ -40,7 +45,7 @@ set_property(TARGET ${project_name} PROPERTY VS_DOTNET_REFERENCES
 	"System.Xml.Linq"
 	"WindowsBase")
 
-set(NUGET "${CMAKE_SOURCE_DIR}/Tools/nuget.exe")
+set(NUGET "${CMAKE_SOURCE_DIR}/../Tools/nuget.exe")
 
 add_custom_command(TARGET ${project_name}
     PRE_BUILD
