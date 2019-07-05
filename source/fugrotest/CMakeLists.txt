@@ -1,6 +1,6 @@
 set(project_name Fugro.OpenCV.Test)
 
-project(${project_name} VERSION 0.1.0 LANGUAGES CSharp)
+project(${project_name} VERSION 2.0.0 LANGUAGES CSharp)
 
 include(CSharpUtilities)
 
@@ -14,7 +14,7 @@ add_library(${project_name} SHARED
 
 csharp_set_designer_cs_properties(Properties/AssemblyInfo.cs)
 
-set_property(TARGET ${project_name} PROPERTY VS_DOTNET_TARGET_FRAMEWORK_VERSION "v4.5")
+set_property(TARGET ${project_name} PROPERTY VS_DOTNET_TARGET_FRAMEWORK_VERSION "v4.8")
 set_property(TARGET ${project_name} PROPERTY WIN32_EXECUTABLE TRUE)
 
 target_link_libraries(${project_name} 

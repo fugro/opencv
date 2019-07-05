@@ -10,7 +10,7 @@ endif()
 
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-project("Fugro.OpenCV")
+project("Fugro.OpenCV" VERSION 2.0.0)
 
 # Configure OpenCV
 set(BUILD_LIST "core,imgcodecs,imgproc,video,features_2d,flann,calib3d" CACHE STRING "")
@@ -116,7 +116,7 @@ string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 string(REPLACE "/RTC1" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
 string(REPLACE "/RTC1" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 
-set( ALL_C_FLAGS "/Gy" )
+set( ALL_C_FLAGS "/Gy /doc" )
 
 set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ALL_C_FLAGS}")
 set( CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${REL_C_FLAGS}" )
@@ -135,7 +135,7 @@ set_property(TARGET ${project_name} PROPERTY COMMON_LANGUAGE_RUNTIME "")
 
 set_target_properties(${project_name} PROPERTIES
                      LINKER_LANGUAGE C
-                     VS_DOTNET_TARGET_FRAMEWORK_VERSION "v4.5")
+                     VS_DOTNET_TARGET_FRAMEWORK_VERSION "v4.8")
 
 set_property(TARGET ${project_name}  PROPERTY VS_DOTNET_REFERENCES
 			"mscorlib"
@@ -151,3 +151,4 @@ set_property(TARGET ${project_name} PROPERTY VS_GLOBAL_CLRSupport "false")
 
 add_subdirectory(fugrotest)
 configure_file("NuGet.Config.in" "${CMAKE_BINARY_DIR}/NuGet.Config")
+configure_file("Fugro.OpenCV.nuspec.in" "${CMAKE_BINARY_DIR}/Fugro.OpenCV.nuspec")

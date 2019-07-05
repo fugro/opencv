@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Fugro.OpenCV</id>
+    <version>2.0.0</version>
+    <authors>Fugro</authors>
+    <owners>Fugro</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .Net wrapper for the OpenCV (Open Source Computer Vision) library</description>
+    <copyright>© Fugro. All rights reserved.</copyright>
+  </metadata>
+  <files>
+    <file src="Release\Fugro.OpenCV.dll" target="lib\net48" /> 
+    <file src="Release\Fugro.OpenCV.xml" target="lib\net48" /> 
+</files>
+</package>
