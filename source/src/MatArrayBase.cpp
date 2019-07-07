@@ -24,10 +24,11 @@ MatArrayBase::MatArrayBase(const Mat& mat)
 MatArrayBase::!MatArrayBase()
 {
   delete this->mat;
-
+  this->mat = nullptr;
   if (this->memoryPressure > 0)
   {
     GC::RemoveMemoryPressure(this->memoryPressure);
+    this->memoryPressure = 0;
   } 
 }
 
