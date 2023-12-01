@@ -1,5 +1,5 @@
 # Disclaimer
-This repository is no longer maintained.
+This repository is no longer maintained and it has been archived.
 
 ----------------------------------------
 
