@@ -1,3 +1,8 @@
+# Disclaimer
+This repository is no longer maintained.
+
+----------------------------------------
+
 # opencv
 A .Net wrapper for the OpenCV (Open Source Computer Vision) library
 
